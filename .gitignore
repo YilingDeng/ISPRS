@@ -1,0 +1,19 @@
+# History files
+.Rhistory
+
+# R data files from past sessions
+.Rdata
+*.Rproj
+.Rproj.user
+
+# html
+*.html
+
+# R
+obsolete code.R
+bad code.R
+
+# data
+*.csv
+*.geojson
+*.txt
