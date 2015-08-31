@@ -17,3 +17,6 @@ bad code.R
 *.csv
 *.geojson
 *.txt
+
+# rpubs
+rsconnect/
