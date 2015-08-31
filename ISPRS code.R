@@ -118,7 +118,7 @@ getSE <- function(Route_id, X, Y) {
     return(ifelse(Dis < 300, 1, 0))
 }
 dirIndex <- mapply(getSE, afcSpatial$route_id, afcSpatial$x, afcSpatial$y)
-afcSE <- cbind(afcSpatial[, list(bus_id, day, time)], dirIindex)
+afcSE <- cbind(afcSpatial[, list(bus_id, day, time)], dirIndex)
 afcSE <- afcSE[dirIndex == 1, ]
 
 setkey(afcSpatial, bus_id, day, time)

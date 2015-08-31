@@ -215,7 +215,7 @@ getSE <- function(Route_id, X, Y) {
 # 定义在已知该条线路首末站点的坐标的基础上，根据距离判断是首末站点的刷数据的方法
 
 dirIndex <- mapply(getSE, afcSpatial$route_id, afcSpatial$x, afcSpatial$y)
-afcSE <- cbind(afcSpatial[, list(bus_id, day, time)], dirIindex)
+afcSE <- cbind(afcSpatial[, list(bus_id, day, time)], dirIndex)
 afcSE <- afcSE[dirIndex == 1, ]
 # 对afcSpatial数据逐条检验，如果该刷卡数据的位置离该条线路首末站点坐标的距离小于300m，则将其作为首末站点的刷卡数据，对afcSpatial数据进行筛选后得到仅包含首末站点的刷卡数据afcSE
 
