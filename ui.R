@@ -34,6 +34,9 @@ ui <- dashboardPage(
               a("ISPRS (深圳)", href = "http://citysensing.cn/opencup/home.html")
             ),
             p(class = "small", "View", 
+              a("Data from", href = "http://citysensing.cn/opencup/home.html")
+            ),
+            p(class = "small", "View", 
               a("Source code", href = "https://github.com/coralseu/ISPRS")
             ),
             p(class = "small", "Author", 
