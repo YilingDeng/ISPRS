@@ -30,11 +30,14 @@ ui <- dashboardPage(
               ", ",
               a("ggplot2", href = "http://ggplot2.org/")
             ),
+            p(class = "small", "Data from", 
+              a("ISPRS (深圳)", href = "http://citysensing.cn/opencup/home.html")
+            ),
             p(class = "small", "View", 
               a("Source code", href = "https://github.com/coralseu/ISPRS")
             ),
             p(class = "small", "Author", 
-              a("Yiling Deng", href = "coralseu@163.com")
+              a("Yiling Deng (邓一凌)", href = "http://coralseu.github.io")
             )
         )
     ),
