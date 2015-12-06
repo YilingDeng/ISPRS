@@ -4,6 +4,7 @@ library(leaflet)
 library(plotly)
 library(ggplot2)
 library(data.table)
+library(ggmap)
 
 ui <- dashboardPage(
     dashboardHeader(
@@ -14,7 +15,8 @@ ui <- dashboardPage(
         sidebarMenu(
             menuItem("Bus line profile", tabName = "line", icon = icon("check")),
             menuItem("Bus station profile", tabName = "station", icon = icon("circle")),
-            menuItem("Transit OD", tabName = "transit", icon = icon("bus"))
+            menuItem("Transit OD", tabName = "transit", icon = icon("bus")),
+            menuItem("Transit accessibility", tabName = "playground", icon = icon("exchange"))
         ),
         div(style = "padding-left: 15px; padding-top: 40px;",
             p(class = "small", "Made with ",
@@ -92,6 +94,25 @@ ui <- dashboardPage(
                     ),
                     fluidRow(
                         box(width = 12, title = "公交出行讫点聚类图", leafletOutput("transit_D"))
+                    ),
+                    fluidRow(
+                        box(sliderInput("range", "选择OD客流量", min = 3000, max = 9000, value = c(7000, 9000)))
+                    ),
+                    fluidRow(
+                        box(width = 12, title = "公交出行OD图", leafletOutput("transit_OD"))
+                    )
+
+            ),
+            # transit play ------------------------------------------------------------            
+            tabItem(tabName = "playground", 
+                    fluidRow(
+                        box(sliderInput("radius", "选择缓冲区半径", min = 100, max = 1000, value = 500, step = 50))
+                    ),
+                    fluidRow(
+                        box(width = 12, title = "单击选择位置", leafletOutput("get_location"))
+                    ),
+                    fluidRow(
+                        box(width = 12, title = "途径公交线路", leafletOutput("dis_transit"))
                     )
             )
         )

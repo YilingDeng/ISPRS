@@ -98,6 +98,36 @@ shiny <- function(input, output) {
     output$transit_D <- renderLeaflet({
       leaflet() %>% addTiles() %>% addCircleMarkers(data = lineStopsSuperCombine, lng = ~lngwgs, lat = ~latwgs, radius = ~alightVolumn / 3000)
     })
+    output$transit_OD <- renderLeaflet({
+        leaflet() %>% addTiles() %>% addPolylines(data = OD[volumn > input$range[1] & volumn < input$range[2], ], lng = ~lng, lat = ~lat, group = ~id, color = "red", weight = ~volumn / 3000, popup = "volumn") %>% 
+            addCircleMarkers(data = lineStopsSuperCombine, lng = ~lngwgs, lat = ~latwgs, radius = ~(alightVolumn + boardVolumn) / 6000)
+    })
+    output$get_location <- renderLeaflet({
+        leaflet() %>% addTiles() %>% setView(114.2, 22.65, zoom = 10)
+    })
+    observeEvent(input$get_location_click, {
+        click <- input$get_location_click
+        if(is.null(click))
+            return()
+        point <- data.table(lng = click$lng, lat = click$lat)
+        point[, c("x", "y") := list(lng, lat)]
+        coordinates(point) <- c("x", "y")
+        proj4string(point) <- CRS("+init=epsg:4326")
+        point <- spTransform(point, CRS("+init=epsg:2414"))
+        point <- data.table(coordinates(point), point@data)
+        
+        InCircleStops <- lineStops[dir == 1 & sqrt((lineStops$x - point$x) ^ 2 + (lineStops$y - point$y) ^ 2) < input$radius, route_id]
+        InCircleStops <- lineStops[route_id %in% InCircleStops & dir == 1, ]
+
+        output$dis_transit <- renderLeaflet({
+            leaflet() %>% addTiles() %>% setView(lng = 114.2, lat = 22.65, zoom = 10) %>% 
+                addMarkers(data = point, lng = ~lng, lat = ~lat) %>% 
+                addCircles(data = point, lng = ~lng, lat = ~lat, radius = input$radius) %>% 
+                addCircleMarkers(data = InCircleStops, lng = ~lngwgs, lat = ~latwgs, radius = 1)
+        })
+    })
 }
+
+
 
 
